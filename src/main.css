@@ -26,10 +26,7 @@ body::before {
     background: radial-gradient(
         ellipse at center,
         transparent 0%,
-        #0000000c 100%
-        su
-        de
-        
+        #0000000c 100% su de
     );
     pointer-events: none;
 }
