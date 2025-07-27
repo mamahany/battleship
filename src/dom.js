@@ -100,7 +100,7 @@ const domController = (() => {
         const cell = board.querySelector(`.cell[data-x="${x}"][data-y="${y}"]`);
         if (!cell) return;
         const gif = document.createElement('img');
-        gif.src = `${bombGif}?t=${Date.now()}`;
+        gif.src = bombGif;
         gif.classList.add('explosion-gif');
         cell.appendChild(gif);
 
