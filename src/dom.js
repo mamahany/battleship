@@ -3,25 +3,6 @@ import bgMusicUrl from './assets/bgmusic.mp3';
 import expMusicUrl from './assets/explosion.mp3';
 import { Player } from './classes';
 import { randomlyPlaceFleet, playerWon, getWinnerName } from './utils';
-function loadImage(src) {
-    return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.src = src;
-        img.onload = () => resolve(src);
-        img.onerror = reject;
-    });
-}
-
-function loadAudio(src) {
-    return new Promise((resolve, reject) => {
-        const audio = new Audio(src);
-        audio.addEventListener('canplaythrough', () => resolve(src), {
-            once: true,
-        });
-        audio.addEventListener('error', reject, { once: true });
-        audio.load();
-    });
-}
 const domController = (() => {
     const container = document.querySelector('.container');
     const dialog = document.querySelector('dialog');
@@ -295,4 +276,4 @@ const domController = (() => {
     return { initGame };
 })();
 
-export { domController, loadImage, loadAudio };
+export { domController};
