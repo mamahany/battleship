@@ -1,0 +1,328 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+:root {
+    --bg-dark: #1e2328;
+    --bg-panel: #2f3b36;
+    --cell-empty: #47544b;
+    --cell-line: #2c2f33;
+    --accent: #c0ad74;
+    --hit: #a83636;
+    --miss: #5c636a;
+    --text: #d1d5d0;
+}
+body {
+    background: linear-gradient(to bottom, var(--bg-dark), #15191c);
+    color: var(--text);
+    font-family: 'Stardos Stencil', 'Courier New', monospace;
+    height: 100vh;
+    position: relative;
+}
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(
+        ellipse at center,
+        transparent 0%,
+        #0000000c 100%
+        su
+        de
+        
+    );
+    pointer-events: none;
+}
+.container {
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--bg-panel);
+    padding: 1.5rem;
+    border-top: 3px solid var(--accent);
+    border-bottom: 3px solid var(--accent);
+    gap: 3rem;
+    color: var(--text);
+}
+
+/* Styling for Boards and cells */
+@keyframes shake {
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+    25% {
+        transform: translate(2px, -2px);
+    }
+    50% {
+        transform: translate(-2px, 2px);
+    }
+    75% {
+        transform: translate(2px, 2px);
+    }
+}
+
+.enemy-board.shake {
+    animation: shake 0.3s;
+}
+.player-board.shake {
+    animation: shake 0.3s;
+}
+.enemy-board,
+.init-board,
+.player-board {
+    position: relative;
+    background-color: var(--bg-panel);
+    border: 2px solid var(--accent);
+    display: grid;
+    grid-template-columns: repeat(10, 40px);
+    grid-template-rows: repeat(10, 40px);
+    margin: 20px auto;
+    gap: 1px;
+    box-shadow: 0 0 8px #0006;
+    height: fit-content;
+}
+.enemy-board h3,
+.init-board h3,
+.player-board h3 {
+    top: -30px;
+    position: absolute;
+    z-index: 500;
+}
+.cell {
+    width: 40px;
+    height: 40px;
+    background-color: var(--cell-empty);
+    border: 1px solid var(--cell-line);
+    position: relative;
+}
+.cell.hit {
+    background-color: var(--hit);
+}
+.cell.miss {
+    background-color: var(--miss);
+}
+.cell.placed-ship {
+    background-color: var(--accent);
+    box-shadow: inset 0 0 4px #0005;
+}
+.cell:hover {
+    filter: brightness(0.8);
+    cursor: pointer;
+}
+.explosion-gif {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150%;
+    height: 150%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.enemy-board .cell:hover {
+    cursor: crosshair;
+}
+.player-board .cell.hit::before {
+    content: '';
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+    background-color: var(--hit);
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* Styling for initGame Screen */
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 300px;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    background-color: #202725;
+    padding: 1rem;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+}
+form label {
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: bold;
+}
+form input {
+    padding: 0.5rem;
+    background-color: #111;
+    color: var(--text);
+    border: 1px solid var(--accent);
+    outline: none;
+    font-family: monospace;
+}
+form button {
+    background-color: var(--accent);
+    color: var(--bg-dark);
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    text-transform: uppercase;
+    transition: background 0.2s;
+}
+form button:hover {
+    background-color: #b39c5e;
+}
+.ships-container {
+    background-color: #202725;
+    border: 1px solid var(--accent);
+    padding: 1rem;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.ships-container h3 {
+    font-size: 1rem;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+#rotate-btn {
+    background-color: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    cursor: pointer;
+    font-family: monospace;
+}
+
+#rotate-btn:hover {
+    background-color: var(--accent);
+    color: var(--bg-dark);
+}
+.ships {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.ships.vertical {
+    flex-direction: row;
+}
+.ship {
+    height: 40px;
+    background-color: var(--accent);
+    border: 1px solid #333;
+    cursor: grab;
+    color: var(--bg-panel);
+    font-family: 'Stardos Stencil', 'Courier New', monospace;
+    font-size: 16px;
+    text-transform: uppercase;
+    padding: 0.5rem;
+}
+.ship.vertical {
+    width: 40px !important;
+}
+
+.ship[data-length='5'] {
+    width: 200px;
+}
+.ship[data-length='4'] {
+    width: 160px;
+}
+.ship[data-length='3'] {
+    width: 120px;
+}
+.ship[data-length='2'] {
+    width: 80px;
+}
+
+.ship[data-length='5'].vertical {
+    height: 200px;
+}
+.ship[data-length='4'].vertical {
+    height: 160px;
+}
+.ship[data-length='3'].vertical {
+    height: 120px;
+}
+.ship[data-length='2'].vertical {
+    height: 80px;
+}
+
+/* Styling for announce Win/Lose dialog */
+dialog {
+    position: fixed;
+    inset: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 50%;
+    transform: translateX(-50%);
+}
+dialog:not([open]) {
+    display: none;
+}
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.75);
+    inset: 0;
+}
+#result-div {
+    width: 80vw;
+    max-width: 400px;
+    border: 3px solid var(--accent);
+    border-radius: 6px;
+    background-color: var(--bg-panel);
+    color: var(--text);
+    padding: 1.5rem;
+    font-family: 'Stardos Stencil', monospace;
+    text-align: center;
+    box-shadow: 0 0 12px #0008;
+    margin: auto;
+    margin-top: 30vh;
+    text-transform: uppercase;
+}
+#result-div form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#result-text {
+    font-size: 1.25rem;
+    margin-bottom: 1.25rem;
+    text-transform: uppercase;
+}
+#replay-btn {
+    background: var(--accent);
+    color: var(--bg-dark);
+    border: none;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: inset 0 0 4px #0004;
+    max-width: 200px;
+}
+
+#replay-btn:hover {
+    background: #b39c5e;
+}
+#replay-btn:focus {
+    outline: 2px solid var(--text);
+    outline-offset: 2px;
+}

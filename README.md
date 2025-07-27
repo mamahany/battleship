@@ -1,3 +1,3 @@
-# basic-setup
+# Battleship
 
-Basic project setup (package.json, webpack, Eslint, prettier, readme.md, .gitignore)
+This is part of TheOdinProject JavaScript Course

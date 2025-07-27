@@ -38,6 +38,10 @@ module.exports = {
                     filename: 'fonts/[name][ext]',
                 },
             },
+            {
+                test: /\.(mp3|wav|ogg)$/i,
+                type: 'asset/resource',
+            },
         ],
     },
 };

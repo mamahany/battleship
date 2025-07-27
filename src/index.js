@@ -1,4 +1,4 @@
-function sayHello() {
-    console.log('Hello');
-}
-sayHello();
+import './main.css';
+import { domController } from './dom.js';
+
+domController.initGame();
